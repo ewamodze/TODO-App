@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TODO-App</string>
+
+    // Add/Edit task
+    <string name="hint">Task name</string>
+    <string name="priority">Important task</string>
+</resources>
