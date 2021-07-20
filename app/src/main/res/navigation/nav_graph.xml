@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/taskFragment2">
+    app:startDestination="@id/tasksFragment">
     <fragment
-        android:id="@+id/taskFragment2"
-        android:name="com.ewamo.todo_app.ui.TaskFragment"
+        android:id="@+id/tasksFragment"
+        android:name="com.ewamo.todo_app.ui.TasksFragment"
         android:label="fragment_tasks"
         tools:layout="@layout/fragment_tasks" />
 </navigation>
