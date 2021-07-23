@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.ewamo.todo_app.data.PreferencesManager
 import com.ewamo.todo_app.data.SortOrder
+import com.ewamo.todo_app.data.Task
 import com.ewamo.todo_app.data.TaskDao
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,6 +33,8 @@ class TasksViewModel @Inject constructor(
         taskDao.getTasks(query, filterPreferences.sortOrder, filterPreferences.hideCompleted)
     }
 
+    val tasks = taskFlow.asLiveData()
+
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
         preferencesManager.updateSortOrder(sortOrder)
     }
@@ -40,5 +43,10 @@ class TasksViewModel @Inject constructor(
         preferencesManager.updateHideCompleted(hideComplited)
     }
 
-    val tasks = taskFlow.asLiveData()
+    fun onTaskSelected(task: Task) {}
+
+    fun onTaskCheckedChanged(task: Task, isChecked: Boolean) = viewModelScope.launch {
+        taskDao.update(task.copy(completed = isChecked))
+    }
+
 }
