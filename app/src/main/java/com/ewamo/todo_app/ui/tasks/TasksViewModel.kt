@@ -5,10 +5,10 @@ import com.ewamo.todo_app.data.PreferencesManager
 import com.ewamo.todo_app.data.SortOrder
 import com.ewamo.todo_app.data.Task
 import com.ewamo.todo_app.data.TaskDao
-import dagger.assisted.Assisted
+import com.ewamo.todo_app.ui.ADD_TASK_RESULT_OK
+import com.ewamo.todo_app.ui.EDIT_TASK_RESULT_OK
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -69,10 +69,22 @@ class TasksViewModel @Inject constructor(
         tasksEventChannel.send(TasksEvent.NavigateToAddTaskScreen)
     }
 
+    fun onAddEditResult(result: Int) {
+        when (result) {
+            ADD_TASK_RESULT_OK -> showTaskSavedConfirmationMessage("Task added")
+            EDIT_TASK_RESULT_OK -> showTaskSavedConfirmationMessage("Task updated")
+        }
+    }
+
+    private fun showTaskSavedConfirmationMessage(text: String) = viewModelScope.launch {
+        tasksEventChannel.send(TasksEvent.ShowTaskSavedConfirmationMessage(text))
+    }
+
     sealed class TasksEvent {
         object NavigateToAddTaskScreen : TasksEvent()
         data class NavigateToEditTaskScreen(val task: Task) : TasksEvent()
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
+        data class ShowTaskSavedConfirmationMessage(val msg: String) : TasksEvent()
     }
 
 }
