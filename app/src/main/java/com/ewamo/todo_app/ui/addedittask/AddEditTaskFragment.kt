@@ -1,7 +1,9 @@
 package com.ewamo.todo_app.ui.addedittask
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -13,14 +15,46 @@ import androidx.navigation.fragment.findNavController
 import com.ewamo.todo_app.R
 import com.ewamo.todo_app.databinding.FragmentAddEditTaskBinding
 import com.ewamo.todo_app.util.exhaustive
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class AddEditTaskFragment : Fragment(R.layout.fragment_add_edit_task) {
+class AddEditTaskFragment : BottomSheetDialogFragment() {
 
     private val viewModel: AddEditTaskViewModel by viewModels()
+
+    private var _binding: FragmentAddEditTaskBinding? = null
+    private val binding
+        get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(
+            STYLE_NORMAL,
+            R.style.BottomSheetDialog
+        ) // set color invisible to hide dark corners
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentAddEditTaskBinding.inflate(inflater, container, false)
+
+        dialog?.setOnShowListener {
+            val bottomSheetDialog = it as BottomSheetDialog
+            val sheetInternal: View =
+                bottomSheetDialog.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+            BottomSheetBehavior.from(sheetInternal).state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        return binding.root
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,5 +98,10 @@ class AddEditTaskFragment : Fragment(R.layout.fragment_add_edit_task) {
                 }.exhaustive
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
