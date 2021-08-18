@@ -7,35 +7,47 @@
     android:padding="24dp"
     tools:context=".ui.addedittask.AddEditTaskFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="80dp"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edit_text_task_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint" />
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="80dp"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <CheckBox
-            android:id="@+id/checkbox_important"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/priority" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
 
-        <TextView
-            android:id="@+id/text_view_date_created"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            tools:text="Date created:" />
+                <EditText
+                    android:id="@+id/edit_text_task_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.5"
+                    android:hint="@string/hint" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <CheckBox
+                android:id="@+id/checkbox_important"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/priority" />
+
+            <TextView
+                android:id="@+id/text_view_date_created"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                tools:text="Date created:" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_save_task"
